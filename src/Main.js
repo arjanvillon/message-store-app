@@ -1,14 +1,12 @@
 import { ethers } from "ethers";
 import { useEffect, useState } from "react";
-import {
-  goerli,
-  useAccount,
-  useConnect,
-  useDisconnect,
-  useSigner,
-} from "wagmi";
+import { goerli, useAccount, useConnect, useSigner } from "wagmi";
 import { InjectedConnector } from "wagmi/connectors/injected";
 import messageStoreAbi from "./MessageStore.json";
+
+// Change this variable with your contract address
+const messageStoreContractAddress =
+  "0xe15563a4D9E6bcE33f37FB10A81C90D45c96A90c";
 
 const Main = () => {
   const [text, setText] = useState("");
@@ -22,7 +20,7 @@ const Main = () => {
   const updateData = async () => {
     if (signer) {
       const messageStoreContract = new ethers.Contract(
-        "0xe15563a4D9E6bcE33f37FB10A81C90D45c96A90c",
+        messageStoreContractAddress,
         messageStoreAbi,
         signer
       );
@@ -45,7 +43,7 @@ const Main = () => {
         onSubmit={async (evt) => {
           evt.preventDefault();
           const messageStoreContract = new ethers.Contract(
-            "0xe15563a4D9E6bcE33f37FB10A81C90D45c96A90c",
+            messageStoreContractAddress,
             messageStoreAbi,
             signer
           );
