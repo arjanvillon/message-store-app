@@ -49,8 +49,20 @@ const Main = () => {
             messageStoreAbi,
             signer
           );
-          await messageStoreContract.updateData(text);
-          await updateData();
+
+          // Run the tx
+          const tx = await messageStoreContract.updateData(text);
+          // tx.wait() is a function to return the receipt of the tx above
+          const receipt = await tx.wait();
+
+          // receipt returns a variable called status
+          // a status of 1 means that the transaction is successful
+          // if the status is 0, it means it was reverted
+          // the code below checks if the tx was successful
+          // if it is equal to 1, update the data variable
+          if (receipt.status === 1) {
+            await updateData();
+          }
         }}
       >
         <input
